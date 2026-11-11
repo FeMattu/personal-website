@@ -63,7 +63,6 @@ export function SiteHeader({ siteName }: Props) {
       <div className="mx-auto flex h-16 max-w-5xl items-center gap-4 px-4 sm:px-6">
         <Link
           href="/"
-          aria-label={t('a11y.logoLabel')}
           className="flex items-center gap-2 rounded-md font-semibold tracking-tight focus-visible:ring-ring"
         >
           <span
@@ -72,7 +71,7 @@ export function SiteHeader({ siteName }: Props) {
           >
             FM
           </span>
-          <span className="hidden sm:inline">{siteName}</span>
+          <span className="sr-only sm:not-sr-only">{siteName}</span>
         </Link>
 
         <nav aria-label={t('a11y.mainNav')} className="ml-auto hidden md:block">
