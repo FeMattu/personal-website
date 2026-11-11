@@ -2,20 +2,20 @@ import { fileURLToPath } from 'node:url'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vitest/config'
 
-const alias = {
-  '@': fileURLToPath(new URL('./src', import.meta.url)),
-  // `server-only` throws outside React Server Components; tests run in plain Node.
-  'server-only': fileURLToPath(new URL('./tests/stubs/server-only.ts', import.meta.url)),
-}
-
 export default defineConfig({
   plugins: [react()],
-  resolve: { alias },
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // `server-only` throws outside React Server Components; tests run in plain Node.
+      'server-only': fileURLToPath(new URL('./tests/stubs/server-only.ts', import.meta.url)),
+    },
+  },
   test: {
+    // Inline projects extend this file (plugins + aliases are shared).
     projects: [
       {
-        plugins: [react()],
-        resolve: { alias },
+        extends: true,
         test: {
           name: 'unit',
           environment: 'node',
@@ -25,7 +25,7 @@ export default defineConfig({
         },
       },
       {
-        resolve: { alias },
+        extends: true,
         test: {
           name: 'integration',
           environment: 'node',
