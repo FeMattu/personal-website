@@ -1,0 +1,36 @@
+# dependencies
+node_modules
+.pnpm-store
+
+# next / build
+.next
+out
+build
+next-env.d.ts
+*.tsbuildinfo
+
+# env: only .env.example is committed
+.env
+.env.*
+!.env.example
+
+# tests
+coverage
+test-results
+playwright-report
+playwright/.auth
+
+# local uploads and storage emulators (never commit user media)
+storage-data
+minio-data
+
+# generated
+src/generated
+graphify-out
+
+# os / editor
+.DS_Store
+Thumbs.db
+*.stackdump
+.vscode/*
+!.vscode/extensions.json

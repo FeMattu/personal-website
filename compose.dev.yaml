@@ -1,0 +1,71 @@
+# Development stack with hot reload:  docker compose -f compose.dev.yaml up
+# Only the database is required for `pnpm dev` on the host:  docker compose -f compose.dev.yaml up -d db
+# Source is mounted; node_modules and .next stay in the container.
+
+name: personal-website-dev
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: site
+      POSTGRES_PASSWORD: site-dev-only
+      POSTGRES_DB: site
+    ports:
+      - '127.0.0.1:${DB_PORT:-54340}:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U site -d site']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  migrate:
+    image: personal-website:dev
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: dev
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://site:site-dev-only@db:5432/site
+      SEED: 'true'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: ['sh', 'docker/migrate.sh']
+
+  app:
+    image: personal-website:dev
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: dev
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgresql://site:site-dev-only@db:5432/site
+      AUTH_SECRET: development-only-secret-change-me-0123456789
+      AUTH_TRUST_HOST: 'true'
+      WATCHPACK_POLLING: 'true'
+    ports:
+      - '127.0.0.1:${APP_PORT:-3000}:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    init: true
+
+volumes:
+  db-data:

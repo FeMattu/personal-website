@@ -1,0 +1,82 @@
+# Production-like stack, one command:   docker compose up -d --build
+#   db       PostgreSQL 17 (named volume, healthcheck)
+#   migrate  applies migrations + idempotent seed, then exits
+#   app      Next.js standalone server
+# Optional local S3 (photo pipeline offline):   docker compose --profile s3 up -d
+
+name: personal-website
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-site}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-site}
+    ports:
+      - '127.0.0.1:${DB_PORT:-54340}:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  migrate:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: tools
+    image: personal-website-tools:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-site}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-site}
+      SEED: ${SEED:-true}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: runner
+    image: personal-website:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-site}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-site}
+      AUTH_TRUST_HOST: 'true'
+      LOCAL_STORAGE_DIR: /data/storage
+    volumes:
+      - storage-data:/data/storage
+    ports:
+      - '${APP_PORT:-3000}:3000'
+
+  # Local S3-compatible store (MinIO) to develop the photo pipeline offline.
+  minio:
+    profiles: ['s3']
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    ports:
+      - '127.0.0.1:9000:9000'
+      - '127.0.0.1:9001:9001'
+    volumes:
+      - minio-data:/data
+
+volumes:
+  db-data:
+  storage-data:
+  minio-data:

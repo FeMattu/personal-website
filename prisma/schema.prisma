@@ -1,0 +1,580 @@
+// Personal website schema (rewrite).
+//
+// Conventions
+// - Every content entity has: id (cuid), createdAt/updatedAt, status (DRAFT|PUBLISHED) and, when ordered, position.
+// - Translatable text lives in one `<Entity>Translation` table per entity, keyed by (entityId, locale).
+//   `locale` is a foreign key to `Locale.code`, so supported languages are data, not code.
+//   Missing/empty fields fall back to the default locale in `src/lib/i18n/localize.ts`.
+// - Storage keys only (never URLs): the CDN/base URL comes from the environment.
+// - Real migrations only (`prisma migrate`), never `db push`.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================ enums
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum SocialKind {
+  GITHUB
+  LINKEDIN
+  INSTAGRAM
+  EMAIL
+  PHONE
+  WEBSITE
+  OTHER
+}
+
+enum SkillLevel {
+  BASIC
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum LanguageProficiency {
+  BASIC
+  INTERMEDIATE
+  FLUENT
+  NATIVE
+}
+
+enum TagKind {
+  TECH
+  PHOTO
+}
+
+enum MessageStatus {
+  NEW
+  READ
+  ARCHIVED
+}
+
+enum ImageFormat {
+  AVIF
+  WEBP
+  JPEG
+}
+
+// ============================================================ auth (Auth.js)
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+// ============================================================ i18n + site settings
+
+model Locale {
+  code      String   @id // "it", "en", ...
+  name      String // native name, e.g. "Italiano"
+  isDefault Boolean  @default(false)
+  enabled   Boolean  @default(true)
+  position  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  siteSettings  SiteSettingsTranslation[]
+  experiences   ExperienceTranslation[]
+  educations    EducationTranslation[]
+  certification CertificationTranslation[]
+  categories    SkillCategoryTranslation[]
+  skills        SkillTranslation[]
+  projects      ProjectTranslation[]
+  albums        PhotoAlbumTranslation[]
+  photos        PhotoTranslation[]
+  spoken        SpokenLanguageTranslation[]
+}
+
+/// Singleton row (id = "site").
+model SiteSettings {
+  id        String   @id @default("site")
+  ownerName String
+  email     String?
+  phone     String?
+  avatarKey String? // storage key
+  cvPath    String? // public path or storage key of the CV PDF
+  updatedAt DateTime @updatedAt
+
+  translations SiteSettingsTranslation[]
+}
+
+model SiteSettingsTranslation {
+  settingsId     String
+  locale         String
+  role           String // hero role line
+  tagline        String?
+  bio            String? // short bio, plain text, paragraphs split by a blank line
+  interests      String?
+  location       String?
+  seoTitle       String?
+  seoDescription String?
+
+  settings SiteSettings @relation(fields: [settingsId], references: [id], onDelete: Cascade)
+  language Locale       @relation(fields: [locale], references: [code], onDelete: Restrict)
+
+  @@id([settingsId, locale])
+}
+
+model SocialLink {
+  id        String        @id @default(cuid())
+  kind      SocialKind
+  label     String?
+  url       String
+  status    ContentStatus @default(PUBLISHED)
+  position  Int           @default(0)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([status, position])
+}
+
+// ============================================================ tags
+
+model Tag {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  kind      TagKind  @default(TECH)
+  createdAt DateTime @default(now())
+
+  experiences ExperienceTag[]
+  projects    ProjectTag[]
+  photos      PhotoTag[]
+
+  @@index([kind])
+}
+
+// ============================================================ CV content
+
+model Experience {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  organization String
+  location     String?
+  url          String?
+  startDate    DateTime      @db.Date
+  endDate      DateTime?     @db.Date // null = ongoing
+  featured     Boolean       @default(true)
+  status       ContentStatus @default(PUBLISHED)
+  position     Int           @default(0)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  translations ExperienceTranslation[]
+  tags         ExperienceTag[]
+
+  @@index([status, position])
+}
+
+model ExperienceTranslation {
+  experienceId String
+  locale       String
+  role         String
+  summary      String?
+  description  String?
+  highlights   String[]
+
+  experience Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  language   Locale     @relation(fields: [locale], references: [code], onDelete: Restrict)
+
+  @@id([experienceId, locale])
+}
+
+model ExperienceTag {
+  experienceId String
+  tagId        String
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  tag          Tag        @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([experienceId, tagId])
+  @@index([tagId])
+}
+
+model Education {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  institution String
+  location    String?
+  url         String?
+  startDate   DateTime      @db.Date
+  endDate     DateTime?     @db.Date
+  status      ContentStatus @default(PUBLISHED)
+  position    Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  translations EducationTranslation[]
+
+  @@index([status, position])
+}
+
+model EducationTranslation {
+  educationId String
+  locale      String
+  title       String
+  summary     String?
+  description String?
+  highlights  String[]
+
+  education Education @relation(fields: [educationId], references: [id], onDelete: Cascade)
+  language  Locale    @relation(fields: [locale], references: [code], onDelete: Restrict)
+
+  @@id([educationId, locale])
+}
+
+model Certification {
+  id        String        @id @default(cuid())
+  slug      String        @unique
+  issuer    String?
+  issuedAt  DateTime?     @db.Date
+  url       String?
+  status    ContentStatus @default(PUBLISHED)
+  position  Int           @default(0)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  translations CertificationTranslation[]
+
+  @@index([status, position])
+}
+
+model CertificationTranslation {
+  certificationId String
+  locale          String
+  name            String
+  description     String?
+
+  certification Certification @relation(fields: [certificationId], references: [id], onDelete: Cascade)
+  language      Locale        @relation(fields: [locale], references: [code], onDelete: Restrict)
+
+  @@id([certificationId, locale])
+}
+
+model SpokenLanguage {
+  id          String              @id @default(cuid())
+  code        String              @unique // ISO 639-1 of the spoken language
+  name        String // in its own language: "Italiano", "English"
+  proficiency LanguageProficiency
+  status      ContentStatus       @default(PUBLISHED)
+  position    Int                 @default(0)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  translations SpokenLanguageTranslation[]
+
+  @@index([status, position])
+}
+
+model SpokenLanguageTranslation {
+  spokenLanguageId String
+  locale           String
+  detail           String? // e.g. "IELTS 6.5"
+
+  spokenLanguage SpokenLanguage @relation(fields: [spokenLanguageId], references: [id], onDelete: Cascade)
+  language       Locale         @relation(fields: [locale], references: [code], onDelete: Restrict)
+
+  @@id([spokenLanguageId, locale])
+}
+
+model SkillCategory {
+  id        String        @id @default(cuid())
+  slug      String        @unique
+  status    ContentStatus @default(PUBLISHED)
+  position  Int           @default(0)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  translations SkillCategoryTranslation[]
+  skills       Skill[]
+
+  @@index([status, position])
+}
+
+model SkillCategoryTranslation {
+  categoryId String
+  locale     String
+  name       String
+
+  category SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  language Locale        @relation(fields: [locale], references: [code], onDelete: Restrict)
+
+  @@id([categoryId, locale])
+}
+
+model Skill {
+  id         String        @id @default(cuid())
+  slug       String        @unique
+  name       String
+  level      SkillLevel? // null = not rated (never invented)
+  categoryId String
+  status     ContentStatus @default(PUBLISHED)
+  position   Int           @default(0)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  category     SkillCategory      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  translations SkillTranslation[]
+  projects     ProjectSkill[]
+
+  @@index([categoryId, position])
+  @@index([status])
+}
+
+model SkillTranslation {
+  skillId     String
+  locale      String
+  description String?
+
+  skill    Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  language Locale @relation(fields: [locale], references: [code], onDelete: Restrict)
+
+  @@id([skillId, locale])
+}
+
+// ============================================================ projects (websites portfolio)
+
+model Project {
+  id        String        @id @default(cuid())
+  slug      String        @unique
+  coverKey  String? // storage key
+  liveUrl   String?
+  repoUrl   String?
+  startDate DateTime?     @db.Date
+  featured  Boolean       @default(false)
+  status    ContentStatus @default(DRAFT)
+  position  Int           @default(0)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  translations ProjectTranslation[]
+  images       ProjectImage[]
+  tags         ProjectTag[]
+  skills       ProjectSkill[]
+
+  @@index([status, position])
+  @@index([featured, status])
+}
+
+model ProjectTranslation {
+  projectId   String
+  locale      String
+  title       String
+  summary     String?
+  description String?
+  goals       String?
+
+  project  Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  language Locale  @relation(fields: [locale], references: [code], onDelete: Restrict)
+
+  @@id([projectId, locale])
+}
+
+model ProjectImage {
+  id         String   @id @default(cuid())
+  projectId  String
+  storageKey String
+  position   Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, position])
+}
+
+model ProjectTag {
+  projectId String
+  tagId     String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, tagId])
+  @@index([tagId])
+}
+
+model ProjectSkill {
+  projectId String
+  skillId   String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  skill     Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, skillId])
+  @@index([skillId])
+}
+
+// ============================================================ photos (data layer ready, UI later)
+
+model PhotoAlbum {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  coverPhotoId String?
+  status       ContentStatus @default(PUBLISHED)
+  position     Int           @default(0)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  translations PhotoAlbumTranslation[]
+  photos       Photo[]
+
+  @@index([status, position])
+}
+
+model PhotoAlbumTranslation {
+  albumId     String
+  locale      String
+  title       String
+  description String?
+
+  album    PhotoAlbum @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  language Locale     @relation(fields: [locale], references: [code], onDelete: Restrict)
+
+  @@id([albumId, locale])
+}
+
+model Photo {
+  id            String  @id @default(cuid())
+  albumId       String?
+  /// Storage key of the untouched original, content-hashed (e.g. originals/<sha256>.jpg).
+  originalKey   String  @unique
+  contentHash   String  @unique // sha256 of the original bytes (dedupe + immutable keys)
+  width         Int
+  height        Int
+  bytes         Int?
+  blurDataUrl   String? // tiny inline placeholder (data URL)
+  dominantColor String? // "#rrggbb"
+
+  // EXIF (all optional; GPS is intentionally NOT stored)
+  cameraMake   String?
+  cameraModel  String?
+  lensModel    String?
+  focalLength  Float? // mm
+  aperture     Float? // f-number
+  exposureTime Float? // seconds
+  iso          Int?
+  capturedAt   DateTime?
+  place        String?
+
+  featured  Boolean       @default(false)
+  status    ContentStatus @default(DRAFT)
+  position  Int           @default(0)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  album        PhotoAlbum?        @relation(fields: [albumId], references: [id], onDelete: SetNull)
+  translations PhotoTranslation[]
+  variants     PhotoVariant[]
+  tags         PhotoTag[]
+
+  @@index([albumId, position])
+  @@index([status, featured, position])
+  @@index([capturedAt])
+}
+
+model PhotoTranslation {
+  photoId     String
+  locale      String
+  title       String?
+  description String?
+  alt         String?
+
+  photo    Photo  @relation(fields: [photoId], references: [id], onDelete: Cascade)
+  language Locale @relation(fields: [locale], references: [code], onDelete: Restrict)
+
+  @@id([photoId, locale])
+}
+
+/// One derived rendition (width x format) of a photo. `storageKey` is content-hashed => immutable.
+model PhotoVariant {
+  id         String      @id @default(cuid())
+  photoId    String
+  width      Int
+  height     Int
+  format     ImageFormat
+  storageKey String      @unique
+  bytes      Int
+  createdAt  DateTime    @default(now())
+
+  photo Photo @relation(fields: [photoId], references: [id], onDelete: Cascade)
+
+  @@unique([photoId, width, format])
+  @@index([photoId])
+}
+
+model PhotoTag {
+  photoId String
+  tagId   String
+  photo   Photo @relation(fields: [photoId], references: [id], onDelete: Cascade)
+  tag     Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([photoId, tagId])
+  @@index([tagId])
+}
+
+// ============================================================ contact
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  body      String
+  locale    String?
+  /// sha256(ip + secret): rate limiting without storing raw addresses.
+  ipHash    String?
+  status    MessageStatus @default(NEW)
+  createdAt DateTime      @default(now())
+
+  @@index([ipHash, createdAt])
+  @@index([status, createdAt])
+}
