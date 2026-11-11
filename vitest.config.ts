@@ -22,7 +22,6 @@ export default defineConfig({
           include: ['tests/unit/**/*.test.ts', 'tests/unit/**/*.test.tsx'],
           // Component tests opt in to jsdom with a `// @vitest-environment jsdom` pragma.
           setupFiles: ['tests/setup.ts'],
-          environmentMatchGlobs: [['tests/unit/components/**', 'jsdom']],
         },
       },
       {
