@@ -42,5 +42,4 @@ old suite was component-test heavy, integration tests ran against a `site_test` 
 Signed-URL expiry gymnastics, JSON-map translations, generic admin with an unsafe cast, OAuth-only admin with no client
 configured locally, S3 access/saving problems, OneDrive-located repo.
 
-Raw outputs live outside the repo (scratchpad). Re-run:
-`python run.py "<old path>"` (see `docs/graphify-howto.md` is not kept; the command is `graphify.extract.extract` + `build_from_json`).
+Raw graphify outputs (graph.json, GRAPH_REPORT.md) live outside the repo (scratch folder) on purpose.
