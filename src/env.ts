@@ -5,7 +5,8 @@ import { z } from 'zod'
  * (a static build must not demand auth or AWS secrets). Server-only: never import in client code.
  */
 const emptyToUndefined = (v: unknown) => (typeof v === 'string' && v.trim() === '' ? undefined : v)
-const optional = <T extends z.ZodType>(schema: T) => z.preprocess(emptyToUndefined, schema.optional())
+const optional = <T extends z.ZodType>(schema: T) =>
+  z.preprocess(emptyToUndefined, schema.optional())
 
 const groups = {
   db: z.object({ DATABASE_URL: z.string().min(1) }),

@@ -6,16 +6,16 @@ ambiguous.
 
 ## Phases (each ends with: lint, `tsc --noEmit`, `vitest run`, `next build`, then a commit)
 
-| # | Phase | Output |
-| - | ----- | ------ |
-| 0 | Analysis + scaffold | graphify, `architecture-before.md`, inventory, issues, reference notes, `CLAUDE.md` + `.claude/` memory, tooling configs, Docker, `.env` |
-| 1 | Data layer | Prisma schema, first migration, idempotent seed from the CV + old data, repositories, `localize()` fallback |
-| 2 | App shell | i18n (`/[locale]`, it/en), theme, shadcn components, sticky top navbar, footer, design tokens |
-| 3 | Public pages | home (hero + all sections), projects, skills, detail pages + SEO, contact, photos placeholder, 404/error/loading, sitemap/robots/hreflang |
-| 4 | Auth + admin | Auth.js v5 (jwt + Prisma adapter, `ADMIN_EMAIL`), `/login`, `/admin` sidebar, generic CRUD, duplicate, draft/published, dnd reorder, uploads, messages |
-| 5 | Photo infrastructure | `StorageProvider` (local + S3), upload validation, EXIF, sharp variants, blur, hashed keys, image loader, `docs/PHOTOS-AWS-SETUP.md` |
-| 6 | Quality | unit, component, integration, Playwright; coverage >= 80% on `src/lib`+`src/actions`; knip; Lighthouse; security review |
-| 7 | Wrap-up | `architecture-after.md`, `PR.md`, README, memory update, delete temp clones |
+| #   | Phase                | Output                                                                                                                                                 |
+| --- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 0   | Analysis + scaffold  | graphify, `architecture-before.md`, inventory, issues, reference notes, `CLAUDE.md` + `.claude/` memory, tooling configs, Docker, `.env`               |
+| 1   | Data layer           | Prisma schema, first migration, idempotent seed from the CV + old data, repositories, `localize()` fallback                                            |
+| 2   | App shell            | i18n (`/[locale]`, it/en), theme, shadcn components, sticky top navbar, footer, design tokens                                                          |
+| 3   | Public pages         | home (hero + all sections), projects, skills, detail pages + SEO, contact, photos placeholder, 404/error/loading, sitemap/robots/hreflang              |
+| 4   | Auth + admin         | Auth.js v5 (jwt + Prisma adapter, `ADMIN_EMAIL`), `/login`, `/admin` sidebar, generic CRUD, duplicate, draft/published, dnd reorder, uploads, messages |
+| 5   | Photo infrastructure | `StorageProvider` (local + S3), upload validation, EXIF, sharp variants, blur, hashed keys, image loader, `docs/PHOTOS-AWS-SETUP.md`                   |
+| 6   | Quality              | unit, component, integration, Playwright; coverage >= 80% on `src/lib`+`src/actions`; knip; Lighthouse; security review                                |
+| 7   | Wrap-up              | `architecture-after.md`, `PR.md`, README, memory update, delete temp clones                                                                            |
 
 ## Routes
 

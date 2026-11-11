@@ -6,16 +6,16 @@ Note: 3 `.sql` migrations were not parsed (tree-sitter SQL missing) and 14 files
 
 ## God nodes (most connected)
 
-| Node | Edges | Reading |
-| ---- | ----- | ------- |
-| `Button()` | 52 | shadcn UI primitive used everywhere |
-| `Badge()` | 24 | tags/levels |
-| `requireAdmin()` | 22 | every admin page and action funnels through it (good: single guard) |
-| `localize()` | 19 | JSON-map translation fallback |
-| `SiteHeader()` | 18 | top nav |
-| `errorMessage()` | 18 | action error mapping |
-| `ResourceForm()` / `AdminSidebar()` | 16 / 15 | declarative generic admin |
-| `cdnUrls()` | 15 | signed CloudFront URL generation |
+| Node                                | Edges   | Reading                                                             |
+| ----------------------------------- | ------- | ------------------------------------------------------------------- |
+| `Button()`                          | 52      | shadcn UI primitive used everywhere                                 |
+| `Badge()`                           | 24      | tags/levels                                                         |
+| `requireAdmin()`                    | 22      | every admin page and action funnels through it (good: single guard) |
+| `localize()`                        | 19      | JSON-map translation fallback                                       |
+| `SiteHeader()`                      | 18      | top nav                                                             |
+| `errorMessage()`                    | 18      | action error mapping                                                |
+| `ResourceForm()` / `AdminSidebar()` | 16 / 15 | declarative generic admin                                           |
+| `cdnUrls()`                         | 15      | signed CloudFront URL generation                                    |
 
 ## Communities (summary)
 

@@ -3,19 +3,19 @@
 Found by reading the old repo, its docs and running graphify on its code (AST graph: 797 nodes, 2304 edges,
 27 communities; see `architecture-before.md`).
 
-| # | Area | Issue | Handling in the rewrite |
-| - | ---- | ----- | ----------------------- |
-| 1 | Auth | GitHub OAuth only; no client id/secret in `.env.local`, so the admin could not be used locally | Auth.js v5 with GitHub **and** an optional password login (`ADMIN_PASSWORD_HASH`, scrypt), both restricted to `ADMIN_EMAIL` |
-| 2 | Photos | Signed CloudFront URLs expire (workaround: UTC-midnight + 8 days + 5-minute ISR); pages cannot be cached for long, images change URL | Public CDN behind Origin Access Control, immutable content-hashed keys, only keys in DB |
-| 3 | Photos | Access/saving to S3 fails today (typical: IAM resource ARN, bucket policy/OAC, CORS, region) | `docs/PHOTOS-AWS-SETUP.md` troubleshooting table; provider tested against mocks and MinIO |
-| 4 | Photos | 4 of 15 photos had no metadata sidecar (no size/EXIF/blur) | Metadata extracted at upload and stored in DB; width/height required |
-| 5 | Photos | EXIF and variants stored as one JSON blob / single resolution | Typed EXIF columns, `PhotoVariant` rows (AVIF/WebP at several widths) |
-| 6 | Data model | Translations as JSON maps per field: no constraints, no per-locale completeness query | Per-locale `*Translation` tables with FK to `Locale` |
-| 7 | Data model | Free strings for `SocialLink.kind`, tags as `String[]`, level as `Int` | Enums (`SocialKind`, `SkillLevel`), `Tag` + join tables, optional skill-project relation |
-| 8 | Data model | Skills lived in two places (spoken languages were fake "skills") | Dedicated `SpokenLanguage` |
-| 9 | Ops | Folder inside OneDrive: `.next` locks (`EPERM`), stale `bash.exe.stackdump`, `tsbuildinfo` committed-looking noise | New repo outside OneDrive, clean `.gitignore` |
-| 10 | Ops | npm + `package-lock`, no Docker for the app | pnpm single lockfile, Docker Compose (dev + prod) |
-| 11 | Code | Generic admin driven by one declarative resource map with an `as unknown as` cast in the repository | Typed per-resource server actions + shared helpers, no unsafe casts |
-| 12 | Code | Two Lambda `.py` files inside `src/app/api/image` | Not carried over |
-| 13 | Content | Project drafts have no description/links | Left as editable empty drafts (never invented) |
-| 14 | UI | Detail "dialog" intercepting routes not present | Optional intercepting route kept simple: full pages first |
+| #   | Area       | Issue                                                                                                                                | Handling in the rewrite                                                                                                     |
+| --- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Auth       | GitHub OAuth only; no client id/secret in `.env.local`, so the admin could not be used locally                                       | Auth.js v5 with GitHub **and** an optional password login (`ADMIN_PASSWORD_HASH`, scrypt), both restricted to `ADMIN_EMAIL` |
+| 2   | Photos     | Signed CloudFront URLs expire (workaround: UTC-midnight + 8 days + 5-minute ISR); pages cannot be cached for long, images change URL | Public CDN behind Origin Access Control, immutable content-hashed keys, only keys in DB                                     |
+| 3   | Photos     | Access/saving to S3 fails today (typical: IAM resource ARN, bucket policy/OAC, CORS, region)                                         | `docs/PHOTOS-AWS-SETUP.md` troubleshooting table; provider tested against mocks and MinIO                                   |
+| 4   | Photos     | 4 of 15 photos had no metadata sidecar (no size/EXIF/blur)                                                                           | Metadata extracted at upload and stored in DB; width/height required                                                        |
+| 5   | Photos     | EXIF and variants stored as one JSON blob / single resolution                                                                        | Typed EXIF columns, `PhotoVariant` rows (AVIF/WebP at several widths)                                                       |
+| 6   | Data model | Translations as JSON maps per field: no constraints, no per-locale completeness query                                                | Per-locale `*Translation` tables with FK to `Locale`                                                                        |
+| 7   | Data model | Free strings for `SocialLink.kind`, tags as `String[]`, level as `Int`                                                               | Enums (`SocialKind`, `SkillLevel`), `Tag` + join tables, optional skill-project relation                                    |
+| 8   | Data model | Skills lived in two places (spoken languages were fake "skills")                                                                     | Dedicated `SpokenLanguage`                                                                                                  |
+| 9   | Ops        | Folder inside OneDrive: `.next` locks (`EPERM`), stale `bash.exe.stackdump`, `tsbuildinfo` committed-looking noise                   | New repo outside OneDrive, clean `.gitignore`                                                                               |
+| 10  | Ops        | npm + `package-lock`, no Docker for the app                                                                                          | pnpm single lockfile, Docker Compose (dev + prod)                                                                           |
+| 11  | Code       | Generic admin driven by one declarative resource map with an `as unknown as` cast in the repository                                  | Typed per-resource server actions + shared helpers, no unsafe casts                                                         |
+| 12  | Code       | Two Lambda `.py` files inside `src/app/api/image`                                                                                    | Not carried over                                                                                                            |
+| 13  | Content    | Project drafts have no description/links                                                                                             | Left as editable empty drafts (never invented)                                                                              |
+| 14  | UI         | Detail "dialog" intercepting routes not present                                                                                      | Optional intercepting route kept simple: full pages first                                                                   |

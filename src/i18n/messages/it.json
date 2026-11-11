@@ -1,0 +1,168 @@
+{
+  "meta": {
+    "siteName": "Federico Mattucci",
+    "defaultDescription": "Portfolio e CV di Federico Mattucci: sviluppatore full-stack, laureato in Informatica e studente di Laurea Magistrale in Intelligenza Artificiale.",
+    "projectsTitle": "Progetti",
+    "photosTitle": "Fotografie",
+    "skillsTitle": "Competenze",
+    "contactTitle": "Contatti"
+  },
+  "a11y": {
+    "skipToContent": "Vai al contenuto",
+    "mainNav": "Navigazione principale",
+    "openMenu": "Apri il menu",
+    "closeMenu": "Chiudi il menu",
+    "menuTitle": "Menu",
+    "language": "Cambia lingua",
+    "theme": "Cambia tema",
+    "externalLink": "si apre in una nuova scheda",
+    "logoLabel": "Federico Mattucci, vai alla home",
+    "backToTop": "Torna su"
+  },
+  "nav": {
+    "home": "Home",
+    "experience": "Esperienza",
+    "education": "Formazione",
+    "skills": "Competenze",
+    "projects": "Progetti",
+    "photos": "Foto",
+    "contact": "Contatti",
+    "admin": "Admin"
+  },
+  "theme": {
+    "light": "Chiaro",
+    "dark": "Scuro",
+    "system": "Sistema"
+  },
+  "common": {
+    "present": "In corso",
+    "readMore": "Scopri di più",
+    "back": "Indietro",
+    "viewAll": "Vedi tutti",
+    "live": "Sito online",
+    "repo": "Codice",
+    "location": "Luogo",
+    "period": "Periodo",
+    "highlights": "In breve",
+    "details": "Dettagli",
+    "visit": "Visita il sito",
+    "issuer": "Ente",
+    "tags": "Tecnologie"
+  },
+  "hero": {
+    "greeting": "Ciao, sono",
+    "ctaContact": "Contattami",
+    "ctaCv": "Scarica il CV",
+    "ctaPortfolio": "Vedi i progetti",
+    "avatarAlt": "Ritratto di {name}"
+  },
+  "sections": {
+    "about": { "title": "Chi sono" },
+    "experience": { "title": "Esperienza", "subtitle": "Dove ho lavorato e cosa ho fatto." },
+    "education": { "title": "Formazione", "subtitle": "Il mio percorso di studi." },
+    "skills": { "title": "Competenze", "subtitle": "Strumenti e tecnologie che uso." },
+    "projects": {
+      "title": "Progetti",
+      "subtitle": "Una selezione dei siti e delle applicazioni che ho realizzato."
+    },
+    "photos": { "title": "Fotografia", "subtitle": "Uno sguardo sul mio lavoro fotografico." },
+    "contact": { "title": "Contatti", "subtitle": "Scrivimi: rispondo volentieri." },
+    "certifications": { "title": "Certificazioni" },
+    "languages": { "title": "Lingue" },
+    "interests": { "title": "Interessi" }
+  },
+  "skills": {
+    "all": "Tutte",
+    "level": "Livello",
+    "unrated": "Livello non indicato",
+    "relatedProjects": "Progetti collegati",
+    "levels": {
+      "BASIC": "Base",
+      "INTERMEDIATE": "Intermedio",
+      "ADVANCED": "Avanzato",
+      "EXPERT": "Esperto"
+    },
+    "legend": "Il livello è indicato da punti, da Base a Esperto.",
+    "empty": "Nessuna competenza da mostrare."
+  },
+  "languages": {
+    "proficiency": {
+      "BASIC": "Base",
+      "INTERMEDIATE": "Intermedio",
+      "FLUENT": "Fluente",
+      "NATIVE": "Madrelingua"
+    }
+  },
+  "projects": {
+    "filterLabel": "Filtra per tecnologia",
+    "all": "Tutti",
+    "empty": "Nessun progetto pubblicato per ora.",
+    "emptyFiltered": "Nessun progetto con questa tecnologia.",
+    "goals": "Obiettivi",
+    "stack": "Stack",
+    "gallery": "Galleria",
+    "galleryImageAlt": "{title}: immagine {index}",
+    "coverAlt": "Anteprima del progetto {title}",
+    "noCover": "Nessuna anteprima",
+    "relatedSkills": "Competenze coinvolte",
+    "viewProject": "Vedi il progetto"
+  },
+  "photos": {
+    "comingSoonTitle": "Il portfolio fotografico arriva presto",
+    "comingSoonText": "Sto preparando una galleria veloce e curata. Nel frattempo puoi seguirmi sui social.",
+    "albums": "Album",
+    "photoCount": "{count, plural, =0 {Nessuna foto} one {# foto} other {# foto}}",
+    "emptyAlbum": "Questo album è ancora vuoto.",
+    "lightbox": {
+      "close": "Chiudi",
+      "previous": "Foto precedente",
+      "next": "Foto successiva",
+      "details": "Dettagli della foto"
+    }
+  },
+  "contact": {
+    "title": "Scrivimi un messaggio",
+    "name": "Nome",
+    "email": "Email",
+    "subject": "Oggetto",
+    "message": "Messaggio",
+    "optional": "facoltativo",
+    "send": "Invia messaggio",
+    "sending": "Invio in corso…",
+    "success": "Grazie! Il messaggio è stato inviato.",
+    "error": "Non è stato possibile inviare il messaggio. Riprova tra poco.",
+    "rateLimited": "Hai inviato troppi messaggi. Riprova più tardi.",
+    "validation": {
+      "nameRequired": "Inserisci il tuo nome.",
+      "emailInvalid": "Inserisci un indirizzo email valido.",
+      "messageShort": "Il messaggio è troppo breve (minimo 10 caratteri).",
+      "messageLong": "Il messaggio è troppo lungo.",
+      "fieldLong": "Il testo è troppo lungo."
+    },
+    "orReach": "Oppure trovami qui",
+    "email_label": "Scrivi un’email",
+    "phone_label": "Chiama"
+  },
+  "social": {
+    "GITHUB": "GitHub",
+    "LINKEDIN": "LinkedIn",
+    "INSTAGRAM": "Instagram",
+    "EMAIL": "Email",
+    "PHONE": "Telefono",
+    "WEBSITE": "Sito web",
+    "OTHER": "Link"
+  },
+  "footer": {
+    "rights": "© {year} {name}. Tutti i diritti riservati.",
+    "madeWith": "Realizzato con Next.js"
+  },
+  "errors": {
+    "notFoundTitle": "Pagina non trovata",
+    "notFoundText": "La pagina che cerchi non esiste o è stata spostata.",
+    "genericTitle": "Qualcosa è andato storto",
+    "genericText": "Si è verificato un errore imprevisto. Puoi riprovare o tornare alla home.",
+    "retry": "Riprova",
+    "goHome": "Torna alla home"
+  },
+  "loading": "Caricamento…"
+}

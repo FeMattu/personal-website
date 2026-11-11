@@ -1,0 +1,168 @@
+{
+  "meta": {
+    "siteName": "Federico Mattucci",
+    "defaultDescription": "Portfolio and CV of Federico Mattucci: full-stack developer, Computer Science graduate and MSc student in Artificial Intelligence.",
+    "projectsTitle": "Projects",
+    "photosTitle": "Photography",
+    "skillsTitle": "Skills",
+    "contactTitle": "Contact"
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "mainNav": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuTitle": "Menu",
+    "language": "Change language",
+    "theme": "Change theme",
+    "externalLink": "opens in a new tab",
+    "logoLabel": "Federico Mattucci, go to home",
+    "backToTop": "Back to top"
+  },
+  "nav": {
+    "home": "Home",
+    "experience": "Experience",
+    "education": "Education",
+    "skills": "Skills",
+    "projects": "Projects",
+    "photos": "Photos",
+    "contact": "Contact",
+    "admin": "Admin"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "common": {
+    "present": "Present",
+    "readMore": "Read more",
+    "back": "Back",
+    "viewAll": "View all",
+    "live": "Live site",
+    "repo": "Source",
+    "location": "Location",
+    "period": "Period",
+    "highlights": "Highlights",
+    "details": "Details",
+    "visit": "Visit site",
+    "issuer": "Issuer",
+    "tags": "Technologies"
+  },
+  "hero": {
+    "greeting": "Hi, I’m",
+    "ctaContact": "Get in touch",
+    "ctaCv": "Download CV",
+    "ctaPortfolio": "View projects",
+    "avatarAlt": "Portrait of {name}"
+  },
+  "sections": {
+    "about": { "title": "About" },
+    "experience": { "title": "Experience", "subtitle": "Where I have worked and what I did." },
+    "education": { "title": "Education", "subtitle": "My academic path." },
+    "skills": { "title": "Skills", "subtitle": "The tools and technologies I use." },
+    "projects": {
+      "title": "Projects",
+      "subtitle": "A selection of the sites and applications I have built."
+    },
+    "photos": { "title": "Photography", "subtitle": "A look at my photographic work." },
+    "contact": { "title": "Contact", "subtitle": "Write to me: I’m happy to reply." },
+    "certifications": { "title": "Certifications" },
+    "languages": { "title": "Languages" },
+    "interests": { "title": "Interests" }
+  },
+  "skills": {
+    "all": "All",
+    "level": "Level",
+    "unrated": "Level not specified",
+    "relatedProjects": "Related projects",
+    "levels": {
+      "BASIC": "Basic",
+      "INTERMEDIATE": "Intermediate",
+      "ADVANCED": "Advanced",
+      "EXPERT": "Expert"
+    },
+    "legend": "Level is shown with dots, from Basic to Expert.",
+    "empty": "No skills to show."
+  },
+  "languages": {
+    "proficiency": {
+      "BASIC": "Basic",
+      "INTERMEDIATE": "Intermediate",
+      "FLUENT": "Fluent",
+      "NATIVE": "Native"
+    }
+  },
+  "projects": {
+    "filterLabel": "Filter by technology",
+    "all": "All",
+    "empty": "No published projects yet.",
+    "emptyFiltered": "No project uses this technology.",
+    "goals": "Goals",
+    "stack": "Stack",
+    "gallery": "Gallery",
+    "galleryImageAlt": "{title}: image {index}",
+    "coverAlt": "Preview of the project {title}",
+    "noCover": "No preview",
+    "relatedSkills": "Skills involved",
+    "viewProject": "View project"
+  },
+  "photos": {
+    "comingSoonTitle": "The photo portfolio is coming soon",
+    "comingSoonText": "I’m preparing a fast, carefully curated gallery. In the meantime you can follow me on social media.",
+    "albums": "Albums",
+    "photoCount": "{count, plural, =0 {No photos} one {# photo} other {# photos}}",
+    "emptyAlbum": "This album is still empty.",
+    "lightbox": {
+      "close": "Close",
+      "previous": "Previous photo",
+      "next": "Next photo",
+      "details": "Photo details"
+    }
+  },
+  "contact": {
+    "title": "Send me a message",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "optional": "optional",
+    "send": "Send message",
+    "sending": "Sending…",
+    "success": "Thank you! Your message has been sent.",
+    "error": "The message could not be sent. Please try again shortly.",
+    "rateLimited": "You have sent too many messages. Please try again later.",
+    "validation": {
+      "nameRequired": "Please enter your name.",
+      "emailInvalid": "Please enter a valid email address.",
+      "messageShort": "The message is too short (at least 10 characters).",
+      "messageLong": "The message is too long.",
+      "fieldLong": "The text is too long."
+    },
+    "orReach": "Or find me here",
+    "email_label": "Send an email",
+    "phone_label": "Call"
+  },
+  "social": {
+    "GITHUB": "GitHub",
+    "LINKEDIN": "LinkedIn",
+    "INSTAGRAM": "Instagram",
+    "EMAIL": "Email",
+    "PHONE": "Phone",
+    "WEBSITE": "Website",
+    "OTHER": "Link"
+  },
+  "footer": {
+    "rights": "© {year} {name}. All rights reserved.",
+    "madeWith": "Built with Next.js"
+  },
+  "errors": {
+    "notFoundTitle": "Page not found",
+    "notFoundText": "The page you are looking for does not exist or has been moved.",
+    "genericTitle": "Something went wrong",
+    "genericText": "An unexpected error occurred. You can try again or go back to the home page.",
+    "retry": "Try again",
+    "goHome": "Back to home"
+  },
+  "loading": "Loading…"
+}

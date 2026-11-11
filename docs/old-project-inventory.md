@@ -6,15 +6,15 @@ next-intl, shadcn `radix-nova`, S3 + CloudFront (signed URLs), vitest 5 + Playwr
 
 ## Routes (kept in the new site, see `REWRITE_PLAN.md`)
 
-| Old route | Purpose | New |
-| --------- | ------- | --- |
-| `/[locale]` | home: hero, experience, education, skills, projects, photos teaser, contact | kept |
-| `/[locale]/experience/[slug]`, `/education/[slug]`, `/projects/[slug]` | detail pages | kept (+ `/certifications/[slug]`) |
-| `/[locale]/photos` | gallery | placeholder shell (data layer ready) |
-| `/[locale]/[...rest]` | catch-all 404 | `not-found.tsx` |
-| `/login`, `/admin/**` | admin (experience, education, skills, projects, certifications, social links, languages, messages, photos, site-texts) | rebuilt |
-| `/api/auth/*` | Auth.js | rebuilt |
-| `/sitemap.xml`, `/robots.txt` | SEO | rebuilt |
+| Old route                                                              | Purpose                                                                                                                | New                                  |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| `/[locale]`                                                            | home: hero, experience, education, skills, projects, photos teaser, contact                                            | kept                                 |
+| `/[locale]/experience/[slug]`, `/education/[slug]`, `/projects/[slug]` | detail pages                                                                                                           | kept (+ `/certifications/[slug]`)    |
+| `/[locale]/photos`                                                     | gallery                                                                                                                | placeholder shell (data layer ready) |
+| `/[locale]/[...rest]`                                                  | catch-all 404                                                                                                          | `not-found.tsx`                      |
+| `/login`, `/admin/**`                                                  | admin (experience, education, skills, projects, certifications, social links, languages, messages, photos, site-texts) | rebuilt                              |
+| `/api/auth/*`                                                          | Auth.js                                                                                                                | rebuilt                              |
+| `/sitemap.xml`, `/robots.txt`                                          | SEO                                                                                                                    | rebuilt                              |
 
 ## Data model (essentials)
 
