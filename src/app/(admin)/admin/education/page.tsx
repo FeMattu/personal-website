@@ -33,7 +33,7 @@ export default async function EducationListPage() {
       <ResourceList
         items={items}
         noun="education"
-        editHref={(id) => `/admin/education/${id}`}
+        editBase="/admin/education"
         actions={{
           reorder: reorderEducation,
           remove: deleteEducation,

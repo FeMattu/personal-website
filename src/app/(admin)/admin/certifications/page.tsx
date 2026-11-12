@@ -33,7 +33,7 @@ export default async function CertificationListPage() {
       <ResourceList
         items={items}
         noun="certifications"
-        editHref={(id) => `/admin/certifications/${id}`}
+        editBase="/admin/certifications"
         actions={{
           reorder: reorderCertification,
           remove: deleteCertification,

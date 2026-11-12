@@ -33,7 +33,8 @@ type Props = {
   noun: string
   actions: ResourceActions
   /** Edit as a page link... */
-  editHref?: (id: string) => string
+  /** Base path; the edit link is `<editBase>/<id>` (a string, because functions cannot cross the server/client boundary). */
+  editBase?: string
   /** ...or through a callback (dialog editors). */
   onEdit?: (id: string) => void
   deleteWarning?: string
@@ -44,7 +45,7 @@ export function RowActions({
   item,
   noun,
   actions,
-  editHref,
+  editBase,
   onEdit,
   deleteWarning,
 }: Omit<Props, 'items'> & { item: ResourceRow }) {
@@ -61,9 +62,9 @@ export function RowActions({
 
   return (
     <div className="flex items-center">
-      {editHref ? (
+      {editBase ? (
         <Button asChild variant="ghost" size="icon-sm">
-          <Link href={editHref(item.id)} aria-label={`Edit ${item.title}`}>
+          <Link href={`${editBase}/${item.id}`} aria-label={`Edit ${item.title}`}>
             <Pencil />
           </Link>
         </Button>
@@ -135,7 +136,7 @@ export function RowHeading({ item, href }: { item: ResourceRow; href?: string | 
 }
 
 /** Sortable list with the shared row actions. */
-export function ResourceList({ items, noun, actions, editHref, onEdit, deleteWarning }: Props) {
+export function ResourceList({ items, noun, actions, editBase, onEdit, deleteWarning }: Props) {
   if (items.length === 0) {
     return (
       <p className="rounded-lg border border-dashed p-6 text-sm text-muted-foreground">
@@ -150,12 +151,12 @@ export function ResourceList({ items, noun, actions, editHref, onEdit, deleteWar
       onReorder={actions.reorder}
       renderItem={(item) => (
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <RowHeading item={item} href={editHref?.(item.id)} />
+          <RowHeading item={item} href={editBase ? `${editBase}/${item.id}` : undefined} />
           <RowActions
             item={item}
             noun={noun}
             actions={actions}
-            editHref={editHref}
+            editBase={editBase}
             onEdit={onEdit}
             deleteWarning={deleteWarning}
           />

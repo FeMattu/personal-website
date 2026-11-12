@@ -33,7 +33,7 @@ export default async function ProjectListPage() {
       <ResourceList
         items={items}
         noun="projects"
-        editHref={(id) => `/admin/projects/${id}`}
+        editBase="/admin/projects"
         actions={{
           reorder: reorderProject,
           remove: deleteProject,

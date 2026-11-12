@@ -33,7 +33,7 @@ export default async function ExperienceListPage() {
       <ResourceList
         items={items}
         noun="experience"
-        editHref={(id) => `/admin/experience/${id}`}
+        editBase="/admin/experience"
         actions={{
           reorder: reorderExperience,
           remove: deleteExperience,
