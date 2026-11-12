@@ -24,3 +24,14 @@ export function formatPeriod(
 ): string {
   return `${formatMonthYear(start, locale)} – ${end ? formatMonthYear(end, locale) : presentLabel}`
 }
+
+/** Whole years elapsed since a civil date (`YYYY-MM-DD`), never negative. */
+export function yearsSince(day: string, now: Date = new Date()): number {
+  const start = parse(day)
+  let years = now.getUTCFullYear() - start.getUTCFullYear()
+  const beforeAnniversary =
+    now.getUTCMonth() < start.getUTCMonth() ||
+    (now.getUTCMonth() === start.getUTCMonth() && now.getUTCDate() < start.getUTCDate())
+  if (beforeAnniversary) years -= 1
+  return Math.max(0, years)
+}

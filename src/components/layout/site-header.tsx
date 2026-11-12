@@ -1,6 +1,6 @@
 'use client'
 
-import { Menu } from 'lucide-react'
+import { Download, Menu } from 'lucide-react'
 import NextLink from 'next/link'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
@@ -21,10 +21,10 @@ import { Link, usePathname } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 import { activeKeyForPath, NAV_ITEMS, SPY_SECTIONS, type NavKey } from '@/lib/navigation'
 
-type Props = { siteName: string }
+type Props = { siteName: string; cvPath?: string | null }
 
 /** Sticky top navigation bar: the ONLY navigation of the public site (no sidebar). */
-export function SiteHeader({ siteName }: Props) {
+export function SiteHeader({ siteName, cvPath }: Props) {
   const t = useTranslations()
   const pathname = usePathname()
   const isHome = pathname === '/'
@@ -59,8 +59,8 @@ export function SiteHeader({ siteName }: Props) {
   })
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
-      <div className="mx-auto flex h-16 max-w-5xl items-center gap-4 px-4 sm:px-6">
+    <header className="sticky top-3 z-40 px-3 sm:px-6">
+      <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 rounded-full border bg-background/75 px-3 shadow-xs backdrop-blur-md supports-[backdrop-filter]:bg-background/60 sm:px-4">
         <Link
           href="/"
           className="flex items-center gap-2 rounded-md font-semibold tracking-tight focus-visible:ring-ring"
@@ -104,6 +104,19 @@ export function SiteHeader({ siteName }: Props) {
         </nav>
 
         <div className="ml-auto flex items-center gap-1 md:ml-2">
+          {cvPath ? (
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="hidden rounded-full lg:inline-flex"
+            >
+              <a href={cvPath} download>
+                {t('hero.ctaCv')}
+                <Download aria-hidden />
+              </a>
+            </Button>
+          ) : null}
           <LanguageSwitcher />
           <ThemeToggle />
           <Sheet open={open} onOpenChange={setOpen}>

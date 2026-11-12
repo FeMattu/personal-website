@@ -29,6 +29,9 @@
 - Docker: image builds without a DB; `docker compose up -d --build` verified (migrate + seed + app healthy).
 - Docs: `architecture-after.md`, `PR.md`, `CONTENT_MAPPING.md`, README.
 
+## Redesign (after the rewrite): DONE
+- UI = dark/electric-blue "Creative Developer" Dribbble reference; structure/UX = "Developer Profile Template" reference (see D-27). Tokens in `globals.css`, new `stats-bar.tsx`, rewritten hero/about/contact/footer, pill navbar. Home order: hero, stats, about+skills, experience|education, projects, photos, contact.
+
 ## TODO / follow-ups
 - Owner: AWS setup, GitHub OAuth (optional), Resend key, production secrets, fill content (avatar, project drafts).
 - CSP header (nonce) in `proxy.ts`; login rate limit; photo reorder UI; photo grid + lightbox once S3 works; re-import the 15 old photos.

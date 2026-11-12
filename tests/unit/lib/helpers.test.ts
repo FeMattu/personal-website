@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatMonthYear, formatPeriod, formatYear } from '@/lib/dates'
+import { formatMonthYear, formatPeriod, formatYear, yearsSince } from '@/lib/dates'
 import { mediaUrl } from '@/lib/media'
 import { activeKeyForPath, NAV_ITEMS, SPY_SECTIONS } from '@/lib/navigation'
 import { buildMetadata, localizedPath } from '@/lib/seo'
@@ -14,6 +14,14 @@ describe('dates', () => {
   it('renders an open period with the present label', () => {
     expect(formatPeriod('2025-09-01', null, 'en', 'Present')).toBe('Sep 2025 – Present')
     expect(formatPeriod('2025-09-01', '2026-02-01', 'en', 'Present')).toContain('Feb 2026')
+  })
+})
+
+describe('yearsSince', () => {
+  it('counts whole years and respects the anniversary', () => {
+    expect(yearsSince('2020-06-15', new Date('2026-06-14T00:00:00Z'))).toBe(5)
+    expect(yearsSince('2020-06-15', new Date('2026-06-15T00:00:00Z'))).toBe(6)
+    expect(yearsSince('2030-01-01', new Date('2026-01-01T00:00:00Z'))).toBe(0)
   })
 })
 

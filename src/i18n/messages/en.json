@@ -54,22 +54,53 @@
     "ctaContact": "Get in touch",
     "ctaCv": "Download CV",
     "ctaPortfolio": "View projects",
-    "avatarAlt": "Portrait of {name}"
+    "avatarAlt": "Portrait of {name}",
+    "followMe": "Follow me on",
+    "statsLabel": "At a glance",
+    "stats": {
+      "years": "Years of experience",
+      "experiences": "Roles",
+      "projects": "Projects",
+      "technologies": "Technologies"
+    }
   },
   "sections": {
-    "about": { "title": "About" },
-    "experience": { "title": "Experience", "subtitle": "Where I have worked and what I did." },
-    "education": { "title": "Education", "subtitle": "My academic path." },
-    "skills": { "title": "Skills", "subtitle": "The tools and technologies I use." },
+    "about": {
+      "title": "About"
+    },
+    "experience": {
+      "title": "Experience",
+      "subtitle": "Where I have worked and what I did."
+    },
+    "education": {
+      "title": "Education",
+      "subtitle": "My academic path."
+    },
+    "skills": {
+      "title": "Skills",
+      "subtitle": "The tools and technologies I use."
+    },
     "projects": {
       "title": "Projects",
       "subtitle": "A selection of the sites and applications I have built."
     },
-    "photos": { "title": "Photography", "subtitle": "A look at my photographic work." },
-    "contact": { "title": "Contact", "subtitle": "Write to me: I’m happy to reply." },
-    "certifications": { "title": "Certifications" },
-    "languages": { "title": "Languages" },
-    "interests": { "title": "Interests" }
+    "photos": {
+      "title": "Photography",
+      "subtitle": "A look at my photographic work."
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Write to me: I’m happy to reply."
+    },
+    "certifications": {
+      "title": "Certifications"
+    },
+    "languages": {
+      "title": "Languages"
+    },
+    "interests": {
+      "title": "Interests"
+    }
   },
   "skills": {
     "all": "All",
@@ -83,7 +114,8 @@
       "EXPERT": "Expert"
     },
     "legend": "Level is shown with dots, from Basic to Expert.",
-    "empty": "No skills to show."
+    "empty": "No skills to show.",
+    "viewAll": "All skills"
   },
   "languages": {
     "proficiency": {
@@ -141,7 +173,13 @@
     },
     "orReach": "Or find me here",
     "email_label": "Send an email",
-    "phone_label": "Call"
+    "phone_label": "Call",
+    "ctaTitle": "Let’s work together?",
+    "ctaText": "Write to me about projects, collaborations or opportunities: I’m happy to reply.",
+    "ctaButton": "Write to me now",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "locationLabel": "Where"
   },
   "social": {
     "GITHUB": "GitHub",
@@ -154,7 +192,9 @@
   },
   "footer": {
     "rights": "© {year} {name}. All rights reserved.",
-    "madeWith": "Built with Next.js"
+    "madeWith": "Built with Next.js",
+    "navigate": "Navigate",
+    "social": "Social"
   },
   "errors": {
     "notFoundTitle": "Page not found",
@@ -164,5 +204,8 @@
     "retry": "Try again",
     "goHome": "Back to home"
   },
-  "loading": "Loading…"
+  "loading": "Loading…",
+  "about": {
+    "viewMore": "Read the full CV"
+  }
 }

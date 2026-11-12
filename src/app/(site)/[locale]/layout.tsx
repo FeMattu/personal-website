@@ -74,8 +74,8 @@ export default async function LocaleLayout({ children, params }: Props) {
               >
                 {t('skipToContent')}
               </a>
-              <SiteHeader siteName={ownerName} />
-              <main id="main" className="mx-auto max-w-5xl px-4 sm:px-6">
+              <SiteHeader siteName={ownerName} cvPath={site?.cvPath} />
+              <main id="main" className="mx-auto max-w-6xl px-4 sm:px-6">
                 {children}
               </main>
               <SiteFooter ownerName={ownerName} socials={socials} />

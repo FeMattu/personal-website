@@ -54,22 +54,53 @@
     "ctaContact": "Contattami",
     "ctaCv": "Scarica il CV",
     "ctaPortfolio": "Vedi i progetti",
-    "avatarAlt": "Ritratto di {name}"
+    "avatarAlt": "Ritratto di {name}",
+    "followMe": "Seguimi su",
+    "statsLabel": "In numeri",
+    "stats": {
+      "years": "Anni di esperienza",
+      "experiences": "Esperienze",
+      "projects": "Progetti",
+      "technologies": "Tecnologie"
+    }
   },
   "sections": {
-    "about": { "title": "Chi sono" },
-    "experience": { "title": "Esperienza", "subtitle": "Dove ho lavorato e cosa ho fatto." },
-    "education": { "title": "Formazione", "subtitle": "Il mio percorso di studi." },
-    "skills": { "title": "Competenze", "subtitle": "Strumenti e tecnologie che uso." },
+    "about": {
+      "title": "Chi sono"
+    },
+    "experience": {
+      "title": "Esperienza",
+      "subtitle": "Dove ho lavorato e cosa ho fatto."
+    },
+    "education": {
+      "title": "Formazione",
+      "subtitle": "Il mio percorso di studi."
+    },
+    "skills": {
+      "title": "Competenze",
+      "subtitle": "Strumenti e tecnologie che uso."
+    },
     "projects": {
       "title": "Progetti",
       "subtitle": "Una selezione dei siti e delle applicazioni che ho realizzato."
     },
-    "photos": { "title": "Fotografia", "subtitle": "Uno sguardo sul mio lavoro fotografico." },
-    "contact": { "title": "Contatti", "subtitle": "Scrivimi: rispondo volentieri." },
-    "certifications": { "title": "Certificazioni" },
-    "languages": { "title": "Lingue" },
-    "interests": { "title": "Interessi" }
+    "photos": {
+      "title": "Fotografia",
+      "subtitle": "Uno sguardo sul mio lavoro fotografico."
+    },
+    "contact": {
+      "title": "Contatti",
+      "subtitle": "Scrivimi: rispondo volentieri."
+    },
+    "certifications": {
+      "title": "Certificazioni"
+    },
+    "languages": {
+      "title": "Lingue"
+    },
+    "interests": {
+      "title": "Interessi"
+    }
   },
   "skills": {
     "all": "Tutte",
@@ -83,7 +114,8 @@
       "EXPERT": "Esperto"
     },
     "legend": "Il livello è indicato da punti, da Base a Esperto.",
-    "empty": "Nessuna competenza da mostrare."
+    "empty": "Nessuna competenza da mostrare.",
+    "viewAll": "Tutte le competenze"
   },
   "languages": {
     "proficiency": {
@@ -141,7 +173,13 @@
     },
     "orReach": "Oppure trovami qui",
     "email_label": "Scrivi un’email",
-    "phone_label": "Chiama"
+    "phone_label": "Chiama",
+    "ctaTitle": "Lavoriamo insieme?",
+    "ctaText": "Scrivimi per progetti, collaborazioni o opportunità: rispondo volentieri.",
+    "ctaButton": "Scrivimi ora",
+    "emailLabel": "Email",
+    "phoneLabel": "Telefono",
+    "locationLabel": "Dove"
   },
   "social": {
     "GITHUB": "GitHub",
@@ -154,7 +192,9 @@
   },
   "footer": {
     "rights": "© {year} {name}. Tutti i diritti riservati.",
-    "madeWith": "Realizzato con Next.js"
+    "madeWith": "Realizzato con Next.js",
+    "navigate": "Navigazione",
+    "social": "Social"
   },
   "errors": {
     "notFoundTitle": "Pagina non trovata",
@@ -164,5 +204,8 @@
     "retry": "Riprova",
     "goHome": "Torna alla home"
   },
-  "loading": "Caricamento…"
+  "loading": "Caricamento…",
+  "about": {
+    "viewMore": "Leggi il CV completo"
+  }
 }

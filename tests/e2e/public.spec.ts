@@ -71,6 +71,20 @@ test.describe('navigation', () => {
   })
 })
 
+test.describe('layout', () => {
+  for (const route of ['/it', '/en/projects', '/it/contact']) {
+    test(`cannot scroll sideways on ${route}`, async ({ page }) => {
+      await page.goto(route)
+      // Clipped decorations may extend the scroll width; what matters is that the user cannot scroll sideways.
+      const scrollX = await page.evaluate(() => {
+        window.scrollTo(1000, 0)
+        return window.scrollX
+      })
+      expect(scrollX).toBe(0)
+    })
+  }
+})
+
 test.describe('theme', () => {
   test('toggles dark mode, persists it, and does not flash on reload', async ({
     page,
