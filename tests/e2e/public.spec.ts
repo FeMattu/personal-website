@@ -64,7 +64,7 @@ test.describe('navigation', () => {
   test('language switch keeps the page and changes the copy', async ({ page, isMobile }) => {
     test.skip(isMobile, 'covered on desktop')
     await page.goto('/it/projects')
-    await page.getByRole('button', { name: 'Cambia lingua' }).click()
+    await page.getByRole('button', { name: /Cambia lingua/ }).click()
     await page.getByRole('menuitemradio', { name: 'English' }).click()
     await expect(page).toHaveURL(/\/en\/projects$/)
     await expect(page.getByRole('heading', { level: 1, name: 'Projects' })).toBeVisible()

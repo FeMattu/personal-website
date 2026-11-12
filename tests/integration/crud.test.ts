@@ -77,7 +77,7 @@ describe('experience CRUD', () => {
     expect(row.tags.map((t) => t.tag.name).sort()).toEqual(['Next.js', 'React'])
     expect(row.tags.every((t) => t.tag.kind === 'TECH')).toBe(true)
 
-    expect(cache.revalidateTag).toHaveBeenCalledWith('content', 'max')
+    expect(cache.revalidateTag).toHaveBeenCalledWith('content', { expire: 0 })
     expect(cache.revalidatePath).toHaveBeenCalledWith('/', 'layout')
   })
 

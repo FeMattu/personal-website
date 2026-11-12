@@ -4,16 +4,8 @@
   "entry": [
     "src/components/ui/**/*.tsx",
     "tests/e2e/auth.setup.ts",
-    "prisma/seed.ts",
     "scripts/*.ts",
   ],
   "ignoreExportsUsedInFile": true,
-  "ignoreDependencies": [
-    "@prisma/client",
-    "tw-animate-css",
-    "cn",
-    "@tailwindcss/postcss",
-    "shadcn",
-    "dotenv",
-  ],
+  "ignoreDependencies": ["shadcn"],
 }

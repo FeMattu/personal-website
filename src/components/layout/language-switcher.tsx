@@ -34,7 +34,12 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" aria-label={t('language')} className="gap-1.5 px-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          aria-label={`${locale.toUpperCase()}: ${t('language')}`}
+          className="gap-1.5 px-2"
+        >
           <Languages className="size-4" aria-hidden />
           <span className="text-xs font-medium uppercase">{locale}</span>
         </Button>

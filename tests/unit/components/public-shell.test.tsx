@@ -97,7 +97,7 @@ describe('LanguageSwitcher', () => {
   it('lists the configured locales and switches language keeping the path', async () => {
     const user = userEvent.setup()
     renderPublic(<LanguageSwitcher />)
-    await user.click(screen.getByRole('button', { name: 'Change language' }))
+    await user.click(screen.getByRole('button', { name: /Change language/ }))
     expect(await screen.findByRole('menuitemradio', { name: 'English' })).toBeChecked()
     await user.click(screen.getByRole('menuitemradio', { name: 'Italiano' }))
     expect(nav.replace).toHaveBeenCalledWith('/', { locale: 'it' })

@@ -16,7 +16,7 @@
     "format": "prettier --write .",
     "test": "vitest run --project unit",
     "test:integration": "vitest run --project integration",
-    "test:coverage": "vitest run --project unit --coverage",
+    "test:coverage": "vitest run --project unit --project integration --coverage",
     "test:e2e": "playwright test",
     "db:migrate": "prisma migrate deploy && prisma generate",
     "db:migration": "prisma migrate dev --name",
@@ -82,10 +82,6 @@
     "tailwindcss": "^4.3.5",
     "tsx": "^4.23.15",
     "typescript": "~6.0.3",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^5.1.0"
-  },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
   }
 }

@@ -62,13 +62,3 @@ export function env<G extends EnvGroup>(group: G): Env<G> {
   if (!cache.has(group)) cache.set(group, parseEnv(group))
   return cache.get(group) as Env<G>
 }
-
-/** Test helper. */
-export function resetEnvCache(): void {
-  cache.clear()
-}
-
-/** Absolute site origin without trailing slash. */
-export function siteUrl(): string {
-  return env('site').NEXT_PUBLIC_SITE_URL.replace(/\/$/, '')
-}
